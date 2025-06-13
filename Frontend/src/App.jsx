@@ -18,19 +18,21 @@ function App() {
     <Router>
       <div className="p-4">
         <Routes>
+          {/* Default Route: Login Page */}
+          <Route path="/" element={<Login />} />
+
           {/* Protected Route for Creating Poll */}
           <Route
-            path="/"
-            element={isLoggedIn ? <CreatePoll /> : <Navigate to="/login" />}
+            path="/createpoll"
+            element={isLoggedIn ? <CreatePoll /> : <Navigate to="/" />}
           />
 
           {/* Open Routes */}
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/vote/:pollId" element={<VotePoll />} />
           <Route path="/results/:pollId" element={<PollResults />} />
 
-          {/* Redirect any unknown route */}
+          {/* Redirect unknown paths */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
