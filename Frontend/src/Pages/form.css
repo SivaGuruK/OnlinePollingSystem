@@ -1,0 +1,40 @@
+.form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: sans-serif;
+  }
+  
+  .form-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"], input[type="radio"] {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 1rem;
+  }
+  
+  label {
+    margin-left: 8px;
+  }
+  
+  button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px 16px;
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button.submit-btn {
+    background-color: #4CAF50;
+  }
+  
