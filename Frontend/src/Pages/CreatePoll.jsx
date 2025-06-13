@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./Form.css";
 
+
 export default function CreatePoll() {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
