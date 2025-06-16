@@ -1,26 +1,58 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Alert from "../component/Alert";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState({ message: "", type: "" });
+
+  const validatePassword = (pwd) => {
+    return (
+      pwd.length >= 6 &&
+      /[A-Z]/.test(pwd) &&
+      /[a-z]/.test(pwd) &&
+      /\d/.test(pwd)
+    );
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!validatePassword(password)) {
+      setAlert({
+        message:
+          "Password must be at least 6 characters with uppercase, lowercase, and number.",
+        type: "warning",
+      });
+      return;
+    }
+
     try {
       await axios.post("http://localhost:5000/api/auth/register", {
         username,
         password,
       });
-      alert("Registered successfully! Go to login.");
+      setAlert({
+        message: "Registered successfully! Go to login.",
+        type: "success",
+      });
     } catch (err) {
-      alert(err.response.data.message);
+      const msg = err.response?.data?.message || "Registration failed";
+      setAlert({ message: msg, type: "error" });
     }
   };
 
   return (
     <div className="form-container">
+      {alert.message && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert({ message: "", type: "" })}
+        />
+      )}
       <form onSubmit={handleRegister}>
         <h2>Register</h2>
         <input

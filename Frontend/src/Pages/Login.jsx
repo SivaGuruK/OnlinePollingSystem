@@ -1,30 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Alert from "../component/Alert";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState({ message: "", type: "" });
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!username || !password) {
+      setAlert({
+        message: "Please enter both username and password.",
+        type: "warning",
+      });
+      return;
+    }
+
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", {
         username,
         password,
       });
       localStorage.setItem("token", res.data.token);
-      alert("Logged in!");
-      navigate("/createpoll");
+      setAlert({ message: "Logged in successfully!", type: "success" });
+      setTimeout(() => navigate("/createpoll"), 1000);
     } catch (err) {
-      alert(err.response.data.message);
+      const msg = err.response?.data?.message || "Login failed";
+      setAlert({ message: msg, type: "error" });
     }
   };
 
   return (
     <div className="form-container">
+      {alert.message && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert({ message: "", type: "" })}
+        />
+      )}
       <form onSubmit={handleLogin}>
         <h2>Login</h2>
         <input

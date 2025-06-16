@@ -27,3 +27,13 @@ exports.getResults = async (req, res) => {
   const poll = await Poll.findById(req.params.id);
   res.json(poll.options);
 };
+
+exports.getAllPolls = async (req, res) => {
+  try {
+    const polls = await Poll.find();
+    res.json(polls);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+

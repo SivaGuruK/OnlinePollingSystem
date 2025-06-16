@@ -3,23 +3,34 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import Alert from "../component/Alert";
 import "./form.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PollResults() {
-  const { id } = useParams();
+  const { pollId } = useParams();
   const [poll, setPoll] = useState(null);
   const [results, setResults] = useState([]);
+  const [alert, setAlert] = useState({ message: "", type: "" });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/polls/${id}`)
-      .then((res) => setPoll(res.data));
-    axios
-      .get(`http://localhost:5000/api/polls/${id}/results`)
-      .then((res) => setResults(res.data));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const pollRes = await axios.get(
+          `http://localhost:5000/api/polls/${pollId}`
+        );
+        const resultRes = await axios.get(
+          `http://localhost:5000/api/polls/${pollId}/results`
+        );
+        setPoll(pollRes.data);
+        setResults(resultRes.data);
+      } catch (err) {
+        setAlert({ message: "Failed to fetch poll data.", type: "error" });
+      }
+    };
+    fetchData();
+  }, [pollId]);
 
   const data = {
     labels: results.map((opt) => opt.text),
@@ -35,6 +46,13 @@ export default function PollResults() {
 
   return (
     <div className="form-container">
+      {alert.message && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert({ message: "", type: "" })}
+        />
+      )}
       <h2>{poll.question}</h2>
       <Pie data={data} />
     </div>
