@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Alert from "../component/Alert";
-import "./Form.css";
+import "./form.css";
 
 export default function CreatePoll() {
   const [question, setQuestion] = useState("");
