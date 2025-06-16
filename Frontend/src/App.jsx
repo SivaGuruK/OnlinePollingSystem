@@ -5,11 +5,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import CreatePoll from "./pages/CreatePoll";
-import VotePoll from "./pages/VotePoll";
-import PollResults from "./pages/PollResults";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+import CreatePoll from "./pages/CreatePoll.jsx";
+import VotePoll from "./pages/VotePoll.jsx";
+import PollResults from "./pages/PollResults.jsx";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx"
 
 function App() {
   const isLoggedIn = !!localStorage.getItem("token");
