@@ -6,7 +6,7 @@ const User = require("../models/user");
 
 const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
 
-// Register
+
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
