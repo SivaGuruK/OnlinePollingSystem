@@ -13,15 +13,13 @@ export default function PollResults() {
   const [poll, setPoll] = useState(null);
   const [results, setResults] = useState([]);
   const [alert, setAlert] = useState({ message: "", type: "" });
-
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pollRes = await axios.get(
-          `http://localhost:5000/api/polls/${pollId}`
-        );
+        const pollRes = await axios.get(`${BASE_URL}/polls/${pollId}`);
         const resultRes = await axios.get(
-          `http://localhost:5000/api/polls/${pollId}/results`
+          `${BASE_URL}/polls/${pollId}/results`
         );
         setPoll(pollRes.data);
         setResults(resultRes.data);

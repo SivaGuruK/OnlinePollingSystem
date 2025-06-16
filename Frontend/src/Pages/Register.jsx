@@ -7,7 +7,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ message: "", type: "" });
-
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const validatePassword = (pwd) => {
     return (
       pwd.length >= 6 &&
@@ -30,10 +30,7 @@ function Register() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
-        username,
-        password,
-      });
+      await axios.post(`${BASE_URL}/auth/register`, { username, password });
       setAlert({
         message: "Registered successfully! Go to login.",
         type: "success",

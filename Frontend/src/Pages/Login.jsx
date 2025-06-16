@@ -8,7 +8,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ message: "", type: "" });
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -21,7 +21,7 @@ function Login() {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${BASE_URL}/auth/login`, {
         username,
         password,
       });

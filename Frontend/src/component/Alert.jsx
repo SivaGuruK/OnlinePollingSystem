@@ -4,7 +4,7 @@ export default function Alert({ message, type = "info", onClose }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000); // auto-close after 3 seconds
+    }, 3000); 
     return () => clearTimeout(timer);
   }, [onClose]);
 

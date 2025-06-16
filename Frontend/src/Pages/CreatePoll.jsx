@@ -10,9 +10,9 @@ export default function CreatePoll() {
   const [alert, setAlert] = useState({ message: "", type: "" });
   const [polls, setPolls] = useState([]);
 
- 
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
-    axios.get("http://localhost:5000/api/polls").then((res) => {
+    axios.get(`${BASE_URL}/polls`).then((res) => {
       setPolls(res.data);
     });
   }, []);
@@ -25,7 +25,7 @@ export default function CreatePoll() {
           .filter((opt) => opt.trim())
           .map((opt) => ({ text: opt })),
       };
-      const res = await axios.post("http://localhost:5000/api/polls", data);
+      const res = await axios.post(`${BASE_URL}/polls`, data);
       setAlert({
         message: "Poll Created! ID: " + res.data._id,
         type: "success",

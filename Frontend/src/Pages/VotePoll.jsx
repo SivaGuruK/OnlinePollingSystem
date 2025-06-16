@@ -9,10 +9,12 @@ export default function VotePoll() {
   const [poll, setPoll] = useState(null);
   const [selected, setSelected] = useState(null);
   const [alert, setAlert] = useState({ message: "", type: "" });
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/polls/${pollId}`)
+    axios
+      .get(`${BASE_URL}/polls/${pollId}`)
       .then((res) => setPoll(res.data))
       .catch(() => setAlert({ message: "Failed to load poll", type: "error" }));
   }, [pollId]);
@@ -26,7 +28,7 @@ export default function VotePoll() {
       return;
     }    
     try {
-      await axios.post(`http://localhost:5000/api/polls/${pollId}/vote`, {
+      await axios.post(`${BASE_URL}/polls/${pollId}/vote`, {
         optionIndex: selected,
       });
       setAlert({ message: "Vote submitted!", type: "success" });
