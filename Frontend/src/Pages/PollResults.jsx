@@ -4,7 +4,7 @@ import axios from "axios";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import Alert from "../component/Alert";
-import "./form.css";
+import "./Form.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
