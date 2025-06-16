@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Alert from "../component/Alert";
@@ -18,6 +18,13 @@ export default function VotePoll() {
   }, [pollId]);
 
   const vote = async () => {
+    if (selected === null) {
+      setAlert({
+        message: "Please select an option before voting.",
+        type: "error",
+      });
+      return;
+    }    
     try {
       await axios.post(`http://localhost:5000/api/polls/${pollId}/vote`, {
         optionIndex: selected,
@@ -54,6 +61,17 @@ export default function VotePoll() {
       <button className="submit-btn" onClick={vote}>
         Submit Vote
       </button>
+      <Link
+        to={`/results/${poll._id}`}
+        className="submit-btn"
+        style={{
+          marginTop: "10px",
+          display: "inline-block",
+          textAlign: "center",
+        }}
+      >
+        View Results
+      </Link>
     </div>
   );
 }
